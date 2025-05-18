@@ -1,25 +1,17 @@
-// Utility functions
+/**
+ * Processes an array of input values and filters out invalid email addresses.
+ * @param {Array} input - An array of input values.
+ * @returns {Array} - An array of valid email addresses.
+ */
+function processData(input) {
+  const { validateEmail } = require('./validator');
 
-// BUG: This email validation is too simple
-function validateEmail(email) {
-    return email.includes('@');
-}
-
-// TODO: Add function to sanitize HTML input
-function sanitizeInput(input) {
-    // Not implemented - security vulnerability
-    return input;
-}
-
-// Helper function for form data
-function getFormData(formId) {
-    const form = document.getElementById(formId);
-    const formData = new FormData(form);
-    const data = {};
-    
-    for (let [key, value] of formData.entries()) {
-        data[key] = value;
+  return input.filter((item) => {
+    if (typeof item.value === 'string') {
+      return validateEmail(item.value);
     }
-    
-    return data;
+    return false;
+  });
 }
+
+module.exports = { processData };
